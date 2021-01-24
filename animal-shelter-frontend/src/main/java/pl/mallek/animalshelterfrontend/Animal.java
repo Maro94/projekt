@@ -3,7 +3,7 @@ package pl.mallek.animalshelterfrontend;
 public class Animal {
 
 
-    private String id;
+    private long  id;
 
     private String name;
 
@@ -21,11 +21,11 @@ public class Animal {
                 '}';
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -45,7 +45,7 @@ public class Animal {
         this.age = age;
     }
 
-    public Animal(String name, int age) {
+    public Animal( String name, int age) {
         this.name = name;
         this.age = age;
     }

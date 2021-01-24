@@ -1,14 +1,16 @@
 package pl.mallek.animalshelterfrontend;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.vaadin.flow.component.textfield.AbstractNumberField;
 import elemental.json.JsonObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
+
 import org.springframework.web.client.RestTemplate;
+
 
 import java.rmi.ServerException;
 import java.util.Arrays;
@@ -36,8 +38,11 @@ public class ApiConnector {
         if (response.getStatusCode().is4xxClientError())throw new ServerException("Wrong data");
 
     }
+    public void editAnimal(long id,Animal animal){
+        restTemplate.put("http://"+apiUrl+"/put/"+id,animal);
+    }
 
-    public void deleteAnimal(String id){
+    public void deleteAnimal(long id){
         restTemplate.delete("http://"+apiUrl+"/delete/"+id);
     }
 

@@ -1,5 +1,4 @@
 package pl.mallek.animalapimysql;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +37,7 @@ public class AnimalApi {
         return animalRepo.findById(id)
                 .map(productFROMDB-> {
                     productFROMDB.setName(animal.getName());
+                    productFROMDB.setAge(animal.getAge());
                     animalRepo.save(productFROMDB);
                     return ResponseEntity.ok().body(animalRepo.save(productFROMDB));
                 }).orElseGet(()->ResponseEntity.notFound().build());

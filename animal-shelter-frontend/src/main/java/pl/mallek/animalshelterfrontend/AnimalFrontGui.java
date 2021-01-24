@@ -1,19 +1,21 @@
 package pl.mallek.animalshelterfrontend;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import org.atmosphere.interceptor.AtmosphereResourceStateRecovery;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-import java.rmi.ServerException;
 import java.util.ArrayList;
 import java.util.List;
-
+@StyleSheet("http://fonts.googleapis.com/css?family=Cabin+Sketch")
 @Route("")
 public class AnimalFrontGui extends VerticalLayout {
     ApiConnector connector;
@@ -21,32 +23,31 @@ public class AnimalFrontGui extends VerticalLayout {
     List<Animal> animals;
 
 
-
-
     @Autowired
     public AnimalFrontGui(ApiConnector connector){
         this.connector = connector;
         setAlignItems(Alignment.CENTER);
-        Label header = new Label("Schronisko dla zwierząt");
-        header.setWidth("80%");
+        H1 header = new H1("Animal shelter");
+        H2 animalText  = new H2("Available animals");
         refresh();
-        addAddEditButtons();
+        addDeleteEditButtons();
         grid.setItems(animals);
         grid.removeColumnByKey("id");
 
 
-        add(header,grid);
+        add(header,animalText,grid,addButton());
     }
 
     public void refresh() {
         try {
             animals=connector.getAnimalList();
+            grid.setItems(animals);
         }catch (Exception e){
             animals = new ArrayList<>();
         }
     }
 
-    private void addAddEditButtons(){
+    private void addDeleteEditButtons(){
 
         grid.addComponentColumn(animal -> {
             HorizontalLayout buttons = new HorizontalLayout();
@@ -54,12 +55,26 @@ public class AnimalFrontGui extends VerticalLayout {
             delete.addClickListener(buttonClickEvent -> {
                 connector.deleteAnimal(animal.getId());
                 refresh();
-                grid.getDataProvider().refreshAll();
+
             });
             Button edit = new Button("Edit");
+            edit.addClickListener(buttonClickEvent -> {
+                AddEditDialog dialog = new AddEditDialog(animal,connector, this::refresh);
+                dialog.open();
+
+            });
             buttons.add(delete,edit);
             return buttons;
         });
+    }
+
+    private Button addButton(){
+        Button button = new Button("Add animal");
+        button.addClickListener(buttonClickEvent -> {
+            AddEditDialog dialog = new AddEditDialog(connector, this::refresh);
+            dialog.open();
+        });
+        return button;
     }
 
 
