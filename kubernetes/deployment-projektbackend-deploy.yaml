@@ -1,0 +1,78 @@
+﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: projektbackend-deploy
+  namespace: labproj24
+  selfLink: /apis/apps/v1/namespaces/labproj24/deployments/projektbackend-deploy
+  uid: c57622f8-37ed-4b01-a642-574dff86195c
+  resourceVersion: '179864204'
+  generation: 8
+  creationTimestamp: '2021-01-23T21:01:45Z'
+  labels:
+    app: projektbackend-deploy
+  annotations:
+    deployment.kubernetes.io/revision: '8'
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"creationTimestamp":null,"labels":{"app":"projektbackend-deploy"},"name":"projektbackend-deploy","namespace":"labproj24"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"projektbackend-deploy"}},"strategy":{},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"projektbackend-deploy"}},"spec":{"containers":[{"envFrom":[{"configMapRef":{"name":"configmapbackend"}},{"secretRef":{"name":"secretpassword"}}],"image":"image-registry.openshift-image-registry.svc:5000/labproj24/projektbackend:v3","name":"projektbackend","ports":[{"containerPort":8080}],"resources":{}}]}}},"status":{}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: projektbackend-deploy
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: projektbackend-deploy
+      annotations:
+        kubectl.kubernetes.io/restartedAt: '2021-01-24T17:33:25Z'
+    spec:
+      containers:
+        - name: projektbackend
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/labproj24/projektbackend:v3
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: configmapbackend
+            - secretRef:
+                name: secretpassword
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 8
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2021-01-23T21:05:08Z'
+      lastTransitionTime: '2021-01-23T21:05:08Z'
+      reason: MinimumReplicasAvailable
+      message: Deployment has minimum availability.
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2021-01-24T18:27:49Z'
+      lastTransitionTime: '2021-01-23T21:01:45Z'
+      reason: NewReplicaSetAvailable
+      message: >-
+        ReplicaSet "projektbackend-deploy-fb4cf98c8" has successfully
+        progressed.

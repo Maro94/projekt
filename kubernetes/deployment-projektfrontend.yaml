@@ -1,0 +1,74 @@
+﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: projektfrontend
+  namespace: labproj24
+  selfLink: /apis/apps/v1/namespaces/labproj24/deployments/projektfrontend
+  uid: 99ac78db-99fb-4afa-882b-ed7f75163063
+  resourceVersion: '179855134'
+  generation: 7
+  creationTimestamp: '2021-01-23T21:40:08Z'
+  labels:
+    app: projektfrontend
+  annotations:
+    deployment.kubernetes.io/revision: '7'
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"creationTimestamp":null,"labels":{"app":"projektfrontend"},"name":"projektfrontend","namespace":"labproj24"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"projektfrontend"}},"strategy":{},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"projektfrontend"}},"spec":{"containers":[{"envFrom":[{"configMapRef":{"name":"configmapfrontend"}}],"image":"image-registry.openshift-image-registry.svc:5000/labproj24/projektfrontend:v4","name":"projektfrontend","ports":[{"containerPort":8181}],"resources":{}}]}}},"status":{}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: projektfrontend
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: projektfrontend
+      annotations:
+        kubectl.kubernetes.io/restartedAt: '2021-01-24T18:15:04Z'
+    spec:
+      containers:
+        - name: projektfrontend
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/labproj24/projektfrontend:v4
+          ports:
+            - containerPort: 8181
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: configmapfrontend
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 7
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2021-01-24T18:04:41Z'
+      lastTransitionTime: '2021-01-24T18:04:41Z'
+      reason: MinimumReplicasAvailable
+      message: Deployment has minimum availability.
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2021-01-24T18:15:09Z'
+      lastTransitionTime: '2021-01-23T21:40:08Z'
+      reason: NewReplicaSetAvailable
+      message: ReplicaSet "projektfrontend-7d97899ff4" has successfully progressed.

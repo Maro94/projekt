@@ -1,0 +1,14 @@
+﻿kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: configmapbackend
+  namespace: labproj24
+  selfLink: /api/v1/namespaces/labproj24/configmaps/configmapbackend
+  uid: bab7122c-b176-4ef5-b9d5-55c34074e74c
+  resourceVersion: '179860586'
+  creationTimestamp: '2021-01-24T18:22:48Z'
+data:
+  MYSQL_DB_HOST: mysql
+  MYSQL_DB_NAME: mydb
+  MYSQL_DB_PORT: '3306'
+  MYSQL_DB_USERNAME: dbconnName171

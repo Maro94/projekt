@@ -1,0 +1,11 @@
+﻿kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: configmapfrontend
+  namespace: labproj24
+  selfLink: /api/v1/namespaces/labproj24/configmaps/configmapfrontend
+  uid: fe45ca45-418e-411d-bbfb-dec87e33291c
+  resourceVersion: '179854939'
+  creationTimestamp: '2021-01-24T18:14:57Z'
+data:
+  API_URL: 'projektbackendsvc:8080'
